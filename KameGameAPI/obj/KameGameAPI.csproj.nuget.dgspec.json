@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\olive\\source\\repos\\KameGameAPI\\KameGameAPI\\KameGameAPI.csproj": {}
+    "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\olive\\source\\repos\\KameGameAPI\\KameGameAPI\\KameGameAPI.csproj": {
+    "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\olive\\source\\repos\\KameGameAPI\\KameGameAPI\\KameGameAPI.csproj",
+        "projectUniqueName": "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj",
         "projectName": "KameGameAPI",
-        "projectPath": "C:\\Users\\olive\\source\\repos\\KameGameAPI\\KameGameAPI\\KameGameAPI.csproj",
+        "projectPath": "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj",
         "packagesPath": "C:\\Users\\olive\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\olive\\source\\repos\\KameGameAPI\\KameGameAPI\\obj\\",
+        "outputPath": "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\olive\\AppData\\Roaming\\NuGet\\NuGet.Config",
