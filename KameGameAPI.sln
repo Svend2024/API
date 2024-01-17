@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KameGameAPI", "KameGameAPI\KameGameAPI.csproj", "{97651422-F0D8-4EAA-87EC-12D0FD8138AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97651422-F0D8-4EAA-87EC-12D0FD8138AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97651422-F0D8-4EAA-87EC-12D0FD8138AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97651422-F0D8-4EAA-87EC-12D0FD8138AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97651422-F0D8-4EAA-87EC-12D0FD8138AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D33FF6E1-E297-417D-AB12-BA6BFD6167FB}
+	EndGlobalSection
+EndGlobal
