@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj": {}
+    "C:\\Users\\olive\\Source\\Repos\\API\\KameGameAPI\\KameGameAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj": {
+    "C:\\Users\\olive\\Source\\Repos\\API\\KameGameAPI\\KameGameAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj",
+        "projectUniqueName": "C:\\Users\\olive\\Source\\Repos\\API\\KameGameAPI\\KameGameAPI.csproj",
         "projectName": "KameGameAPI",
-        "projectPath": "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\KameGameAPI.csproj",
+        "projectPath": "C:\\Users\\olive\\Source\\Repos\\API\\KameGameAPI\\KameGameAPI.csproj",
         "packagesPath": "C:\\Users\\olive\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\olive\\source\\repos\\API\\KameGameAPI\\obj\\",
+        "outputPath": "C:\\Users\\olive\\Source\\Repos\\API\\KameGameAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\olive\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -43,6 +43,24 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.15, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.15, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.15, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.11, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
