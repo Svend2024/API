@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KameGameAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e33a311284f7f85999cace116d87df032671970")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87d22977c97bea0052e535bddba1c0e12ff1d14f")]
 [assembly: System.Reflection.AssemblyProductAttribute("KameGameAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KameGameAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,6 +11,7 @@ namespace KameGameAPI.Models
         public string fullname { get; set; }
         [ForeignKey("Login.loginId")]
         public int loginId { get; set; }
+        public Login login { get; set; }
 
     }
 }
