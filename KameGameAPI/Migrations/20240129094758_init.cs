@@ -101,6 +101,18 @@ namespace KameGameAPI.Migrations
                 {
                     table.PrimaryKey("PK_transactionHistories", x => x.transactionHistoryId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "zipCodeCities",
+                columns: table => new
+                {
+                    zipCode = table.Column<int>(type: "int", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_zipCodeCities", x => x.zipCode);
+                });
         }
 
         /// <inheritdoc />
@@ -123,6 +135,9 @@ namespace KameGameAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "transactionHistories");
+
+            migrationBuilder.DropTable(
+                name: "zipCodeCities");
         }
     }
 }

@@ -167,6 +167,20 @@ namespace KameGameAPI.Migrations
 
                     b.ToTable("transactionHistories");
                 });
+
+            modelBuilder.Entity("KameGameAPI.Models.ZipCodeCity", b =>
+                {
+                    b.Property<int>("zipCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("zipCode");
+
+                    b.ToTable("zipCodeCities");
+                });
 #pragma warning restore 612, 618
         }
     }
