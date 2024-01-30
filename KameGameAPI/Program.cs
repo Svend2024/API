@@ -2,9 +2,13 @@ using KameGameAPI.Database;
 using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
 using KameGameAPI.Repositories;
+using KameGameAPI.Security;
 using KameGameAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +25,30 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+var jwtSection = builder.Configuration.GetSection("JwtConfig");
+builder.Services.Configure<JwtConfig>(jwtSection);
+
+var appSettings = jwtSection.Get<JwtConfig>();
+var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 var models = Assembly.GetExecutingAssembly().GetTypes().Where(t => !t.IsAbstract && typeof(BaseEntity).IsAssignableFrom(t));
 
