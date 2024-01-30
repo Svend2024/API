@@ -362,4 +362,37 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
+<<<<<<< HEAD
 FodyWeavers.xsd
+/APIUnitTest/obj/Debug/net7.0/APIUnitTest.AssemblyInfo.cs
+/APIUnitTest/obj/APIUnitTest.csproj.nuget.dgspec.json
+/APIUnitTest/obj/APIUnitTest.csproj.nuget.g.props
+/APIUnitTest/obj/Debug/net7.0/APIUnitTest.AssemblyInfoInputs.cache
+/APIUnitTest/obj/Debug/net7.0/APIUnitTest.assets.cache
+/APIUnitTest/obj/Debug/net7.0/APIUnitTest.csproj.AssemblyReference.cache
+/APIUnitTest/obj/Debug/net7.0/APIUnitTest.GeneratedMSBuildEditorConfig.editorconfig
+/APIUnitTest/obj/project.assets.json
+/APIUnitTest/obj/project.nuget.cache
+/KameGameAPI/bin/Debug/net7.0/KameGameAPI.dll
+/KameGameAPI/bin/Debug/net7.0/KameGameAPI.exe
+/KameGameAPI/bin/Debug/net7.0/KameGameAPI.pdb
+/KameGameAPI/obj/Debug/net7.0/apphost.exe
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.AssemblyInfo.cs
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.AssemblyInfoInputs.cache
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.assets.cache
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.csproj.AssemblyReference.cache
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.csproj.CoreCompileInputs.cache
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.csproj.FileListAbsolute.txt
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.dll
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.GeneratedMSBuildEditorConfig.editorconfig
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.genruntimeconfig.cache
+/KameGameAPI/obj/Debug/net7.0/KameGameAPI.pdb
+/KameGameAPI/obj/Debug/net7.0/ref/KameGameAPI.dll
+/KameGameAPI/obj/Debug/net7.0/refint/KameGameAPI.dll
+/KameGameAPI/obj/KameGameAPI.csproj.nuget.dgspec.json
+/KameGameAPI/obj/KameGameAPI.csproj.nuget.g.props
+/KameGameAPI/obj/project.assets.json
+/KameGameAPI/obj/project.nuget.cache
+=======
+FodyWeavers.xsd
+>>>>>>> c03878cba6670e8b22254be321329ba323e67fec
