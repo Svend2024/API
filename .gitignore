@@ -360,6 +360,7 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
+<<<<<<< HEAD
 FodyWeavers.xsd
 /APIUnitTest/obj/Debug/net7.0/APIUnitTest.AssemblyInfo.cs
 /APIUnitTest/obj/APIUnitTest.csproj.nuget.dgspec.json
@@ -390,3 +391,6 @@ FodyWeavers.xsd
 /KameGameAPI/obj/KameGameAPI.csproj.nuget.g.props
 /KameGameAPI/obj/project.assets.json
 /KameGameAPI/obj/project.nuget.cache
+=======
+FodyWeavers.xsd
+>>>>>>> c03878cba6670e8b22254be321329ba323e67fec

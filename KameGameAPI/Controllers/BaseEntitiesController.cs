@@ -10,12 +10,15 @@ namespace KameGameAPI.Controllers
     [ApiController]
     public class BaseEntitiesController<T> : ControllerBase where T: BaseEntity
     {
+        public BaseEntitiesController() { }
         private readonly IBaseService<T> _context;
 
         public BaseEntitiesController(IBaseService<T> context)
         {
             _context = context;
         }
+
+        public BaseEntitiesController(ICustomerService loginContext) { }
 
         [HttpGet]
         public async Task<IActionResult> GetEntities()
