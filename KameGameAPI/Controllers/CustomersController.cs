@@ -15,7 +15,7 @@ namespace KameGameAPI.Controllers
         }        
 
         [HttpPost("Login")]
-        public async Task<ActionResult<LoginResponse>> Login(string username, string password)
+        public async Task<ActionResult<LoginResponse>> Login([FromQuery] string username, [FromQuery] string password)
         {
             try
             {
