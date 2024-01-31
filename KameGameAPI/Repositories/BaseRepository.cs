@@ -107,10 +107,21 @@ namespace KameGameAPI.Repositories
         public async Task<bool> DeleteEntityRepository(int id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
-
             if (entity == null)
             {
                 return false;
+            }
+            else if(entity is Customer)
+            {
+
+            }
+            else if(entity is ProductManager)
+            {
+
+            } 
+            else if(entity is Card)
+            {
+
             }
 
             _context.Set<T>().Remove(entity);

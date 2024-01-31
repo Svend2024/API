@@ -5,7 +5,7 @@ namespace KameGameAPI.Models
     public class Set : BaseEntity
     {
         [Key]
-        public int setCode { get { return id; } set { id = value; } }
+        public string setCode { get ; set ; }
         [Required]
         public string setName { get; set; }
         [Required]
