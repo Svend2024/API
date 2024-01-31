@@ -1,5 +1,6 @@
 ﻿using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
+using NuGet.Protocol.Core.Types;
 
 namespace KameGameAPI.Services
 {
@@ -36,5 +37,14 @@ namespace KameGameAPI.Services
         {
             return await _context.DeleteEntityRepository(id);
         }
+        public async Task<(List<T> pagedEntities, int totalCount)> GetPagedEntitiesService(int page, int pageSize)
+        {
+            var startIndex = (page - 1) * pageSize;
+            var pagedEntities = (await _context.GetPagedAsync(startIndex, pageSize)).ToList();
+            var totalCount = await _context.GetTotalCountAsync();
+
+            return (pagedEntities, totalCount);
+        }
+
     }
 }

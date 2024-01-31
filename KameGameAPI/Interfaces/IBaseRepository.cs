@@ -9,5 +9,7 @@ namespace KameGameAPI.Interfaces
         Task<bool> UpdateEntityRepository(int id, T entity);
         Task CreateEntityRepository(T entity);
         Task<bool> DeleteEntityRepository(int id);
+        Task<IEnumerable<T>> GetPagedAsync(int startIndex, int pageSize);
+        Task<int> GetTotalCountAsync();
     }
 }
