@@ -135,5 +135,13 @@ namespace KameGameAPI.Repositories
             //return (_context.logins?.Any(e => e.loginId == id)).GetValueOrDefault();            
             return Task.FromResult((_context.Set<T>()?.Any(e => e.id == id)).GetValueOrDefault());
         }
+        public async Task<IEnumerable<T>> GetPagedAsync(int startIndex, int pageSize)
+        {
+            return await _context.Set<T>().Skip(startIndex).Take(pageSize).ToListAsync();
+        }
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await _context.Set<T>().CountAsync();
+        }
     }
 }
