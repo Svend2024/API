@@ -15,13 +15,13 @@ namespace KameGameAPI.Controllers
         }        
 
         [HttpPost("Login")]
-        public async Task<ActionResult<LoginResponse>> Login([FromQuery] string username, [FromQuery] string password)
+        public async Task<ActionResult<LoginResponse>> Login([FromBody] Login login)
         {
             try
             {
-                if (username == "" || password == "") return BadRequest();
+                if (login.username == "" || login.password == "") return BadRequest();
 
-                return Ok(await _loginContext.LoginCustomerService(username, password));
+                return Ok(await _loginContext.LoginCustomerService(login.username, login.password));
 
             }
             catch (Exception ex)
