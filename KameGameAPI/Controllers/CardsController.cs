@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KameGameAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CardsController : BaseEntitiesController<Card>
     {
         public CardsController(IBaseService<Card> context) : base(context) { }
