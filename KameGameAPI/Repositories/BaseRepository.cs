@@ -27,21 +27,26 @@ namespace KameGameAPI.Repositories
             T entity = await _context.Set<T>().FindAsync(id);
             if (entity is Customer)
             {
-                Customer customer = (Customer)(object)entity;
+                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.customerId == id).FirstOrDefaultAsync();
                 customer.fullname = _dataProtector.Unprotect(customer.fullname);
                 customer.email = _dataProtector.Unprotect(customer.email);
                 customer.address = _dataProtector.Unprotect(customer.address);
                 customer.login.username = _dataProtector.Unprotect(customer.login.username);
-                customer.login.password = SALT.Hashing(customer.login.password);
+                customer.login.password = customer.login.password;
                 return (T)(object)customer;
             }
             else if (entity is ProductManager)
             {
-                ProductManager productManager = (ProductManager)(object)entity;
+                ProductManager productManager = await _context.productManagers.Include(c => c.login).Where(c => c.productManagerId == id).FirstOrDefaultAsync();
                 productManager.fullname = _dataProtector.Unprotect(productManager.fullname);
                 productManager.login.username = _dataProtector.Unprotect(productManager.login.username);
-                productManager.login.password = SALT.Hashing(productManager.login.password);
+                productManager.login.password = productManager.login.password;
                 return (T)(object)productManager;
+            }
+            else if (entity is Card)
+            {
+                Card card = await _context.cards.Include(c => c.set).Where(c => c.cardId == id).FirstOrDefaultAsync();
+                return (T)(object)card;
             }
             else return entity;
         }
@@ -111,19 +116,21 @@ namespace KameGameAPI.Repositories
             {
                 return false;
             }
-            else if(entity is Customer)
-            {
+            //else if(entity is Customer)
+            //{
+            //    Customer customer = await _context.customers.Include(c => c.login).Where(c => c.customerId == id).FirstOrDefaultAsync();
+            //    _context.customers.Remove(customer);
 
-            }
-            else if(entity is ProductManager)
-            {
+            //}
+            //else if(entity is ProductManager)
+            //{
 
-            } 
-            else if(entity is Card)
-            {
+            //} 
+            //else if(entity is Card)
+            //{
 
-            }
-
+            //}
+            //else _context.Set<T>().Remove(entity);
             _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
 
