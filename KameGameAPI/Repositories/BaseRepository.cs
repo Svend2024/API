@@ -24,8 +24,26 @@ namespace KameGameAPI.Repositories
 
         public async Task<T> GetEntityRepository(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
-
+            T entity = await _context.Set<T>().FindAsync(id);
+            if (entity is Customer)
+            {
+                Customer customer = (Customer)(object)entity;
+                customer.fullname = _dataProtector.Unprotect(customer.fullname);
+                customer.email = _dataProtector.Unprotect(customer.email);
+                customer.address = _dataProtector.Unprotect(customer.address);
+                customer.login.username = _dataProtector.Unprotect(customer.login.username);
+                customer.login.password = SALT.Hashing(customer.login.password);
+                return (T)(object)customer;
+            }
+            else if (entity is ProductManager)
+            {
+                ProductManager productManager = (ProductManager)(object)entity;
+                productManager.fullname = _dataProtector.Unprotect(productManager.fullname);
+                productManager.login.username = _dataProtector.Unprotect(productManager.login.username);
+                productManager.login.password = SALT.Hashing(productManager.login.password);
+                return (T)(object)productManager;
+            }
+            else return entity;
         }
 
         public async Task<bool> UpdateEntityRepository(int id, T entity)
@@ -35,9 +53,26 @@ namespace KameGameAPI.Repositories
                 return false;
             }
 
-            _context.Entry(entity).State = EntityState.Modified;
+            if (entity is Customer)
+            {
+                Customer customer = (Customer)(object)entity;
+                customer.fullname = _dataProtector.Protect(customer.fullname);
+                customer.email = _dataProtector.Protect(customer.email);
+                customer.address = _dataProtector.Protect(customer.address);
+                customer.login.username = _dataProtector.Protect(customer.login.username);
+                customer.login.password = SALT.Hashing(customer.login.password);
+                _context.Entry(customer).State = EntityState.Modified;
+            }
+            else if (entity is ProductManager)
+            {
+                ProductManager productManager = (ProductManager)(object)entity;
+                productManager.fullname = _dataProtector.Protect(productManager.fullname);
+                productManager.login.username = _dataProtector.Protect(productManager.login.username);
+                productManager.login.password = SALT.Hashing(productManager.login.password);
+                _context.Entry(productManager).State = EntityState.Modified;
+            } 
+            else _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
             return true;
         }
 
@@ -49,19 +84,19 @@ namespace KameGameAPI.Repositories
                 Customer customer = (Customer)(object)entity;
                 customer.fullname = _dataProtector.Protect(customer.fullname);
                 customer.email = _dataProtector.Protect(customer.email);
-                customer.address = _dataProtector.Protect(customer.address); 
-                customer.login.username = _dataProtector.Protect(customer.login.username); 
+                customer.address = _dataProtector.Protect(customer.address);
+                customer.login.username = _dataProtector.Protect(customer.login.username);
                 customer.login.password = SALT.Hashing(customer.login.password);
                 await _context.customers.AddAsync(customer);
-            } 
-            else if(entity is ProductManager) 
+            }
+            else if (entity is ProductManager)
             {
                 ProductManager productManager = (ProductManager)(object)entity;
                 productManager.fullname = _dataProtector.Protect(productManager.fullname);
                 productManager.login.username = _dataProtector.Protect(productManager.login.username);
                 productManager.login.password = SALT.Hashing(productManager.login.password);
                 await _context.productManagers.AddAsync(productManager);
-            } 
+            }
             else
             {
                 await _context.Set<T>().AddAsync(entity);

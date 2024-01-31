@@ -13,6 +13,7 @@ namespace KameGameAPI.Models
         public string type { get; set; }
         [ForeignKey("Set.setKode")]
         public int setCode { get; set; }
+        public Set set { get; set; }
         [Required]
         public string pictureLink { get; set; }
         public int stock { get; set; }
