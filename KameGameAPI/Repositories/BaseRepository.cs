@@ -10,7 +10,7 @@ namespace KameGameAPI.Repositories
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         private readonly DatabaseContext _context;
-        private readonly IDataProtector _dataProtector;
+        public readonly IDataProtector _dataProtector;
         public BaseRepository(DatabaseContext context, IDataProtectionProvider dataProtectionProvider)
         {
             _context = context;
@@ -37,16 +37,12 @@ namespace KameGameAPI.Repositories
                 customer.fullname = _dataProtector.Unprotect(customer.fullname);
                 customer.email = _dataProtector.Unprotect(customer.email);
                 customer.address = _dataProtector.Unprotect(customer.address);
-                customer.login.username = _dataProtector.Unprotect(customer.login.username);
-                customer.login.password = customer.login.password;
                 return (T)(object)customer;
             }
             else if (entity is ProductManager)
             {
                 ProductManager productManager = await _context.productManagers.Include(c => c.login).Where(c => c.productManagerId == id).FirstOrDefaultAsync();
                 productManager.fullname = _dataProtector.Unprotect(productManager.fullname);
-                productManager.login.username = _dataProtector.Unprotect(productManager.login.username);
-                productManager.login.password = productManager.login.password;
                 return (T)(object)productManager;
             }
             else if (entity is Card)
@@ -70,7 +66,6 @@ namespace KameGameAPI.Repositories
                 customer.fullname = _dataProtector.Protect(customer.fullname);
                 customer.email = _dataProtector.Protect(customer.email);
                 customer.address = _dataProtector.Protect(customer.address);
-                customer.login.username = _dataProtector.Protect(customer.login.username);
                 customer.login.password = SALT.Hashing(customer.login.password);
                 _context.Entry(customer).State = EntityState.Modified;
             }
@@ -78,7 +73,6 @@ namespace KameGameAPI.Repositories
             {
                 ProductManager productManager = (ProductManager)(object)entity;
                 productManager.fullname = _dataProtector.Protect(productManager.fullname);
-                productManager.login.username = _dataProtector.Protect(productManager.login.username);
                 productManager.login.password = SALT.Hashing(productManager.login.password);
                 _context.Entry(productManager).State = EntityState.Modified;
             } 
@@ -96,7 +90,6 @@ namespace KameGameAPI.Repositories
                 customer.fullname = _dataProtector.Protect(customer.fullname);
                 customer.email = _dataProtector.Protect(customer.email);
                 customer.address = _dataProtector.Protect(customer.address);
-                customer.login.username = _dataProtector.Protect(customer.login.username);
                 customer.login.password = SALT.Hashing(customer.login.password);
                 await _context.customers.AddAsync(customer);
             }
@@ -104,7 +97,6 @@ namespace KameGameAPI.Repositories
             {
                 ProductManager productManager = (ProductManager)(object)entity;
                 productManager.fullname = _dataProtector.Protect(productManager.fullname);
-                productManager.login.username = _dataProtector.Protect(productManager.login.username);
                 productManager.login.password = SALT.Hashing(productManager.login.password);
                 await _context.productManagers.AddAsync(productManager);
             }
