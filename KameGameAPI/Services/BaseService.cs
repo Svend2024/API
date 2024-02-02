@@ -46,5 +46,9 @@ namespace KameGameAPI.Services
             return (pagedEntities, totalCount);
         }
 
+        public Task<(List<T> filteredEntities, object totalCount)> GetFilteredEntitiesService(object filterCriteria, int page, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
