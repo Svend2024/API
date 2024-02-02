@@ -12,9 +12,9 @@
 .KameGameAPI/bin/
 .KameGameAPI/obj/
 
-bin/
-obj/
-KameGameAPI/Migrations/
+.bin/
+.obj/
+.KameGameAPI/Migrations/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
