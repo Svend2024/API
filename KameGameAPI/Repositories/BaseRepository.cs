@@ -19,7 +19,13 @@ namespace KameGameAPI.Repositories
 
         public async Task<List<T>> GetEntitiesRepository()
         {
-            return await _context.Set<T>().ToListAsync();
+            List<T> entity = await _context.Set<T>().ToListAsync();
+            if (entity is List<Card>)
+            {
+                List<Card> cards = await _context.cards.Include(c => c.set).ToListAsync();
+                return (List<T>)(object)cards;
+            }
+            else return entity;
         }
 
         public async Task<T> GetEntityRepository(int id)
@@ -69,7 +75,7 @@ namespace KameGameAPI.Repositories
                 productManager.fullname = _dataProtector.Protect(productManager.fullname);
                 productManager.login.password = SALT.Hashing(productManager.login.password);
                 _context.Entry(productManager).State = EntityState.Modified;
-            } 
+            }
             else _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return true;
@@ -108,22 +114,26 @@ namespace KameGameAPI.Repositories
             {
                 return false;
             }
-            //else if(entity is Customer)
-            //{
-            //    Customer customer = await _context.customers.Include(c => c.login).Where(c => c.customerId == id).FirstOrDefaultAsync();
-            //    _context.customers.Remove(customer);
+            else if (entity is Customer)
+            {
+                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.customerId == id).FirstOrDefaultAsync();
+                _context.logins.Remove(customer.login);
+                _context.customers.Remove(customer);
 
-            //}
-            //else if(entity is ProductManager)
-            //{
-
-            //} 
-            //else if(entity is Card)
-            //{
-
-            //}
-            //else _context.Set<T>().Remove(entity);
-            _context.Set<T>().Remove(entity);
+            }
+            else if (entity is ProductManager)
+            {
+                ProductManager productManager = await _context.productManagers.Include(p => p.login).Where(c => c.productManagerId == id).FirstOrDefaultAsync();
+                _context.logins.Remove(productManager.login);
+                _context.productManagers.Remove(productManager);
+            }
+            else if (entity is Card)
+            {
+                Card card = await _context.cards.Include(p => p.set).Where(c => c.cardId == id).FirstOrDefaultAsync();
+                _context.sets.Remove(card.set);
+                _context.cards.Remove(card);
+            }
+            else _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
 
             return true;
@@ -134,10 +144,12 @@ namespace KameGameAPI.Repositories
             //return (_context.logins?.Any(e => e.loginId == id)).GetValueOrDefault();            
             return Task.FromResult((_context.Set<T>()?.Any(e => e.id == id)).GetValueOrDefault());
         }
+
         public async Task<IEnumerable<T>> GetPagedAsync(int startIndex, int pageSize)
         {
-            return await _context.Set<T>().Skip(startIndex).Take(pageSize).ToListAsync();
+            return (List<T>)(object)await _context.cards.Include(c => c.set).Skip(startIndex).Take(pageSize).ToListAsync();
         }
+
         public async Task<int> GetTotalCountAsync()
         {
             return await _context.Set<T>().CountAsync();

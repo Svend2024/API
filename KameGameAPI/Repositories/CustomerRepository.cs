@@ -19,7 +19,7 @@ namespace KameGameAPI.Repositories
         }
         public async Task<Customer> LoginCustomerRepository(string username, string password)
         {
-            return await _context.customers.Where(c => c.login.username  == username && c.login.password == SALT.Hashing(password)).FirstOrDefaultAsync();
+            return await _context.customers.Where(c => c.login.username == username && c.login.password == SALT.Hashing(password)).FirstOrDefaultAsync();
         }
     }
 }

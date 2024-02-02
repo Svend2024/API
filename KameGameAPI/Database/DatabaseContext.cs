@@ -7,7 +7,7 @@ namespace KameGameAPI.Database
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            
+
         }
         public DbSet<ZipCodeCity> zipCodeCities { get; set; }
         public DbSet<Login> logins { get; set; }
@@ -17,11 +17,13 @@ namespace KameGameAPI.Database
         public DbSet<Card> cards { get; set; }
         public DbSet<TransactionHistory> transactionHistories { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Customer>().HasOne(c => c.login).WithOne().HasForeignKey<Customer>(c => c.loginId).HasPrincipalKey<Login>(l => l.loginId).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<ProductManager>().HasOne(p => p.login).WithOne().OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<Card>().HasOne(c => c.set).WithOne().HasForeignKey<Card>(s => s.setCode).HasPrincipalKey<Set>(s => s.setCode).OnDelete(DeleteBehavior.Cascade);
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Customer>().HasOne(c => c.login).WithOne().HasForeignKey<Customer>(c => c.loginId).OnDelete(DeleteBehavior.Cascade);
+
+        //    modelBuilder.Entity<ProductManager>().HasOne(c => c.login).WithOne().HasForeignKey<ProductManager>(c => c.loginId).OnDelete(DeleteBehavior.Cascade);
+
+        //    modelBuilder.Entity<Card>().HasOne(c => c.set).WithOne().HasForeignKey<Card>(c => c.setCode).OnDelete(DeleteBehavior.Cascade);            
+        //}
     }
 }
