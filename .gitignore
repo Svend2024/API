@@ -12,8 +12,8 @@
 .KameGameAPI/bin/
 .KameGameAPI/obj/
 
-bin/
-obj/
+# bin/
+# obj/
 KameGameAPI/Migrations/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
