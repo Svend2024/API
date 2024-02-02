@@ -17,6 +17,7 @@ namespace KameGameAPI.Controllers
             _context = context;
         }
 
+
         [HttpGet]
         public async Task<IActionResult> GetEntities()
         {
@@ -72,6 +73,28 @@ namespace KameGameAPI.Controllers
                 NoContent();
             }
             return NotFound("Entity == null");
-        }        
+        }
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPagedEntities([FromQuery] int page = 1, [FromQuery] int pageSize = 4)
+        {
+            try
+            {
+                var (pagedEntities, totalCount) = await _context.GetPagedEntitiesService(page, pageSize);
+                var paginatedEntitiesList = pagedEntities.ToList(); // Convert to list
+
+                var result = new
+                {
+                    PagedEntities = paginatedEntitiesList,
+                    TotalCount = totalCount
+                };
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions appropriately
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
