@@ -9,10 +9,9 @@ namespace KameGameAPI.Models
         public int cardId { get { return id; } set { id = value; } }
         [Required]
         public string name { get; set; }
-        [Required]
-        public string type { get; set; }
-        public string attribute { get; set; }
-        public string race { get; set; }
+        public string? type { get; set; }
+        public string? attribute { get; set; }
+        public string? race { get; set; }
         [Required]
         [ForeignKey("Set.setKode")]
         public string setCode { get; set; }
@@ -21,6 +20,7 @@ namespace KameGameAPI.Models
         public string pictureLink { get; set; }
         [Required]
         public int price { get; set; }
+        [Required]
         public int stock { get; set; }
     }
 }
