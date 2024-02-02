@@ -11,11 +11,16 @@ namespace KameGameAPI.Models
         public string name { get; set; }
         [Required]
         public string type { get; set; }
+        public string attribute { get; set; }
+        public string race { get; set; }
+        [Required]
         [ForeignKey("Set.setKode")]
         public string setCode { get; set; }
         public Set set { get; set; }
         [Required]
         public string pictureLink { get; set; }
+        [Required]
+        public int price { get; set; }
         public int stock { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace KameGameAPI.Interfaces
         Task CreateEntityService(T entity);
         Task<bool> DeleteEntityService(int id);
         Task<(List<T> pagedEntities, int totalCount)> GetPagedEntitiesService(int page, int pageSize);
+        Task<(List<T> filteredEntities, object totalCount)> GetFilteredEntitiesService(object filterCriteria, int page, int pageSize);
     }
 }
