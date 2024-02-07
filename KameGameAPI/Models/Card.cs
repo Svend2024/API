@@ -20,7 +20,7 @@ namespace KameGameAPI.Models
         [Required]
         public string pictureLink { get; set; }
         [Required]
-        public int price { get; set; }
+        public double price { get; set; }
         [Required]
         public int stock { get; set; }
     }
