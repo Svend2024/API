@@ -9,8 +9,10 @@ namespace KameGameAPI.Models
         public int transactionHistoryId { get { return id; } set { id = value; } }
         [ForeignKey("Card.cardId")]
         public int cardId { get; set; }
+        public Card card { get; set; }
         [ForeignKey("Customer.customerId")]
         public int customerId { get; set; }
+        public Customer customer { get; set; }
         [Required]
         public DateTime creationDate { get; set; }
     }
