@@ -29,12 +29,14 @@ namespace KameGameAPI.Migrations
                 name: "sets",
                 columns: table => new
                 {
-                    setCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    setId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    setCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     setName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_sets", x => x.setCode);
+                    table.PrimaryKey("PK_sets", x => x.setId);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,8 +120,7 @@ namespace KameGameAPI.Migrations
                     attribute = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     race = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     cardCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    setCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    setCode1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    setId = table.Column<int>(type: "int", nullable: false),
                     pictureLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     price = table.Column<int>(type: "int", nullable: false),
                     stock = table.Column<int>(type: "int", nullable: false)
@@ -128,17 +129,17 @@ namespace KameGameAPI.Migrations
                 {
                     table.PrimaryKey("PK_cards", x => x.cardId);
                     table.ForeignKey(
-                        name: "FK_cards_sets_setCode1",
-                        column: x => x.setCode1,
+                        name: "FK_cards_sets_setId",
+                        column: x => x.setId,
                         principalTable: "sets",
-                        principalColumn: "setCode",
+                        principalColumn: "setId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_cards_setCode1",
+                name: "IX_cards_setId",
                 table: "cards",
-                column: "setCode1");
+                column: "setId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_customers_loginId",

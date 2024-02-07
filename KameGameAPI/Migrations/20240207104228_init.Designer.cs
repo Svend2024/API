@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KameGameAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240207103725_init")]
+    [Migration("20240207104228_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -54,13 +54,8 @@ namespace KameGameAPI.Migrations
                     b.Property<string>("race")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("setCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("setCode1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("setId")
+                        .HasColumnType("int");
 
                     b.Property<int>("stock")
                         .HasColumnType("int");
@@ -70,7 +65,7 @@ namespace KameGameAPI.Migrations
 
                     b.HasKey("cardId");
 
-                    b.HasIndex("setCode1");
+                    b.HasIndex("setId");
 
                     b.ToTable("cards");
                 });
@@ -153,14 +148,21 @@ namespace KameGameAPI.Migrations
 
             modelBuilder.Entity("KameGameAPI.Models.Set", b =>
                 {
+                    b.Property<int>("setId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("setId"));
+
                     b.Property<string>("setCode")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("setName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("setCode");
+                    b.HasKey("setId");
 
                     b.ToTable("sets");
                 });
@@ -205,7 +207,7 @@ namespace KameGameAPI.Migrations
                 {
                     b.HasOne("KameGameAPI.Models.Set", "set")
                         .WithMany()
-                        .HasForeignKey("setCode1")
+                        .HasForeignKey("setId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
