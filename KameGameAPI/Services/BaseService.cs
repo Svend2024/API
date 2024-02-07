@@ -46,7 +46,7 @@ namespace KameGameAPI.Services
 
             return (pagedEntities, totalCount);
         }
-        public async Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesService(string type = null, string attribute = null, string race = null, int page = 1, int pageSize = 4)
+        public async Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesService(string type = null, string attribute = null, string race = null, int page = 1, int pageSize = 8)
         {
             return await _context.GetFilteredEntitiesRepository(type, attribute, race, page, pageSize);
         }

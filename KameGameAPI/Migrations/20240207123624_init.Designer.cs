@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KameGameAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240207124828_init")]
+    [Migration("20240207123624_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -65,8 +65,7 @@ namespace KameGameAPI.Migrations
 
                     b.HasKey("cardId");
 
-                    b.HasIndex("setId")
-                        .IsUnique();
+                    b.HasIndex("setId");
 
                     b.ToTable("cards");
                 });
@@ -99,11 +98,7 @@ namespace KameGameAPI.Migrations
 
                     b.HasKey("customerId");
 
-                    b.HasIndex("loginId")
-                        .IsUnique();
-
-                    b.HasIndex("zipCode")
-                        .IsUnique();
+                    b.HasIndex("loginId");
 
                     b.ToTable("customers");
                 });
@@ -146,8 +141,7 @@ namespace KameGameAPI.Migrations
 
                     b.HasKey("productManagerId");
 
-                    b.HasIndex("loginId")
-                        .IsUnique();
+                    b.HasIndex("loginId");
 
                     b.ToTable("productManagers");
                 });
@@ -192,12 +186,6 @@ namespace KameGameAPI.Migrations
 
                     b.HasKey("transactionHistoryId");
 
-                    b.HasIndex("cardId")
-                        .IsUnique();
-
-                    b.HasIndex("customerId")
-                        .IsUnique();
-
                     b.ToTable("transactionHistories");
                 });
 
@@ -218,8 +206,8 @@ namespace KameGameAPI.Migrations
             modelBuilder.Entity("KameGameAPI.Models.Card", b =>
                 {
                     b.HasOne("KameGameAPI.Models.Set", "set")
-                        .WithOne()
-                        .HasForeignKey("KameGameAPI.Models.Card", "setId")
+                        .WithMany()
+                        .HasForeignKey("setId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -229,50 +217,23 @@ namespace KameGameAPI.Migrations
             modelBuilder.Entity("KameGameAPI.Models.Customer", b =>
                 {
                     b.HasOne("KameGameAPI.Models.Login", "login")
-                        .WithOne()
-                        .HasForeignKey("KameGameAPI.Models.Customer", "loginId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KameGameAPI.Models.ZipCodeCity", "zipCodeCity")
-                        .WithOne()
-                        .HasForeignKey("KameGameAPI.Models.Customer", "zipCode")
+                        .WithMany()
+                        .HasForeignKey("loginId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("login");
-
-                    b.Navigation("zipCodeCity");
                 });
 
             modelBuilder.Entity("KameGameAPI.Models.ProductManager", b =>
                 {
                     b.HasOne("KameGameAPI.Models.Login", "login")
-                        .WithOne()
-                        .HasForeignKey("KameGameAPI.Models.ProductManager", "loginId")
+                        .WithMany()
+                        .HasForeignKey("loginId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("login");
-                });
-
-            modelBuilder.Entity("KameGameAPI.Models.TransactionHistory", b =>
-                {
-                    b.HasOne("KameGameAPI.Models.Card", "card")
-                        .WithOne()
-                        .HasForeignKey("KameGameAPI.Models.TransactionHistory", "cardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KameGameAPI.Models.Customer", "customer")
-                        .WithOne()
-                        .HasForeignKey("KameGameAPI.Models.TransactionHistory", "customerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("card");
-
-                    b.Navigation("customer");
                 });
 #pragma warning restore 612, 618
         }

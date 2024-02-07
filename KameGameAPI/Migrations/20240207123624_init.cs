@@ -40,6 +40,21 @@ namespace KameGameAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "transactionHistories",
+                columns: table => new
+                {
+                    transactionHistoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cardId = table.Column<int>(type: "int", nullable: false),
+                    customerId = table.Column<int>(type: "int", nullable: false),
+                    creationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_transactionHistories", x => x.transactionHistoryId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "zipCodeCities",
                 columns: table => new
                 {
@@ -49,6 +64,29 @@ namespace KameGameAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_zipCodeCities", x => x.zipCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "customers",
+                columns: table => new
+                {
+                    customerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    fullname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    zipCode = table.Column<int>(type: "int", nullable: false),
+                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    loginId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_customers", x => x.customerId);
+                    table.ForeignKey(
+                        name: "FK_customers_logins_loginId",
+                        column: x => x.loginId,
+                        principalTable: "logins",
+                        principalColumn: "loginId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,108 +136,25 @@ namespace KameGameAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "customers",
-                columns: table => new
-                {
-                    customerId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    fullname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    zipCode = table.Column<int>(type: "int", nullable: false),
-                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    loginId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_customers", x => x.customerId);
-                    table.ForeignKey(
-                        name: "FK_customers_logins_loginId",
-                        column: x => x.loginId,
-                        principalTable: "logins",
-                        principalColumn: "loginId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_customers_zipCodeCities_zipCode",
-                        column: x => x.zipCode,
-                        principalTable: "zipCodeCities",
-                        principalColumn: "zipCode",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "transactionHistories",
-                columns: table => new
-                {
-                    transactionHistoryId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    cardId = table.Column<int>(type: "int", nullable: false),
-                    customerId = table.Column<int>(type: "int", nullable: false),
-                    creationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_transactionHistories", x => x.transactionHistoryId);
-                    table.ForeignKey(
-                        name: "FK_transactionHistories_cards_cardId",
-                        column: x => x.cardId,
-                        principalTable: "cards",
-                        principalColumn: "cardId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_transactionHistories_customers_customerId",
-                        column: x => x.customerId,
-                        principalTable: "customers",
-                        principalColumn: "customerId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_cards_setId",
                 table: "cards",
-                column: "setId",
-                unique: true);
+                column: "setId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_customers_loginId",
                 table: "customers",
-                column: "loginId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_customers_zipCode",
-                table: "customers",
-                column: "zipCode",
-                unique: true);
+                column: "loginId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_productManagers_loginId",
                 table: "productManagers",
-                column: "loginId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_transactionHistories_cardId",
-                table: "transactionHistories",
-                column: "cardId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_transactionHistories_customerId",
-                table: "transactionHistories",
-                column: "customerId",
-                unique: true);
+                column: "loginId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "productManagers");
-
-            migrationBuilder.DropTable(
-                name: "transactionHistories");
-
             migrationBuilder.DropTable(
                 name: "cards");
 
@@ -207,13 +162,19 @@ namespace KameGameAPI.Migrations
                 name: "customers");
 
             migrationBuilder.DropTable(
+                name: "productManagers");
+
+            migrationBuilder.DropTable(
+                name: "transactionHistories");
+
+            migrationBuilder.DropTable(
+                name: "zipCodeCities");
+
+            migrationBuilder.DropTable(
                 name: "sets");
 
             migrationBuilder.DropTable(
                 name: "logins");
-
-            migrationBuilder.DropTable(
-                name: "zipCodeCities");
         }
     }
 }

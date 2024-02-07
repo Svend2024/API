@@ -156,32 +156,24 @@ namespace KameGameAPI.Repositories
         }
         public async Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesRepository(string type = null, string attribute = null, string race = null, int page = 1, int pageSize = 4)
         {
-            try
-            {
-                IQueryable<T> query = _context.Set<T>();
+            IQueryable<T> query = _context.Set<T>();
 
-                // Apply filters based on provided parameters
-                if (!string.IsNullOrEmpty(type))
-                    query = query.Where(e => EF.Property<string>(e, "type") == type);
+            // Apply filters based on provided parameters
+            if (!string.IsNullOrEmpty(type))
+                query = query.Where(e => EF.Property<string>(e, "type") == type);
 
-                if (!string.IsNullOrEmpty(attribute))
-                    query = query.Where(e => EF.Property<string>(e, "attribute") == attribute);
+            if (!string.IsNullOrEmpty(attribute))
+                query = query.Where(e => EF.Property<string>(e, "attribute") == attribute);
 
-                if (!string.IsNullOrEmpty(race))
-                    query = query.Where(e => EF.Property<string>(e, "race") == race);
+            if (!string.IsNullOrEmpty(race))
+                query = query.Where(e => EF.Property<string>(e, "race") == race);
 
-                // Pagination
-                var startIndex = (page - 1) * pageSize;
-                var filteredEntities = await query.Skip(startIndex).Take(pageSize).ToListAsync();
-                var totalCount = await query.CountAsync();
+            // Pagination
+            var startIndex = (page - 1) * pageSize;
+            var filteredEntities = await query.Skip(startIndex).Take(pageSize).ToListAsync();
+            var totalCount = await query.CountAsync();
 
-                return (filteredEntities, totalCount);
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions appropriately
-                throw ex;
-            }
+            return (filteredEntities, totalCount);
         }
     }
 }
