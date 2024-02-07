@@ -1,5 +1,6 @@
 ﻿using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 
 namespace KameGameAPI.Services
@@ -45,10 +46,9 @@ namespace KameGameAPI.Services
 
             return (pagedEntities, totalCount);
         }
-
-        public Task<(List<T> filteredEntities, object totalCount)> GetFilteredEntitiesService(object filterCriteria, int page, int pageSize)
+        public async Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesService(string type = null, string attribute = null, string race = null, int page = 1, int pageSize = 4)
         {
-            throw new NotImplementedException();
+            return await _context.GetFilteredEntitiesRepository(type, attribute, race, page, pageSize);
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KameGameAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240207104228_init")]
+    [Migration("20240207105358_init")]
     partial class init
     {
         /// <inheritdoc />
