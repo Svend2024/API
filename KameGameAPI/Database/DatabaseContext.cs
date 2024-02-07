@@ -16,6 +16,10 @@ namespace KameGameAPI.Database
         public DbSet<Set> sets { get; set; }
         public DbSet<Card> cards { get; set; }
         public DbSet<TransactionHistory> transactionHistories { get; set; }
+        public IQueryable<T> GetQueryableEntities<T>() where T : class
+        {
+            return Set<T>();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

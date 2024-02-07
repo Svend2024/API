@@ -1,5 +1,6 @@
 ﻿using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
+using KameGameAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,21 +45,11 @@ namespace KameGameAPI.Controllers
         {
             try
             {
-                // Build your filter criteria
-                var filterCriteria = new
-                {
-                    Type = type,
-                    Attribute = attribute,
-                    Race = race
-                };
-
-                var (filteredEntities, totalCount) = await _context.GetFilteredEntitiesService(filterCriteria, page, pageSize);
-
-                var paginatedEntitiesList = filteredEntities.ToList();
+                var (filteredEntities, totalCount) = await _context.GetFilteredEntitiesService(type, attribute, race, page, pageSize);
 
                 var result = new
                 {
-                    PagedFilteredEntities = paginatedEntitiesList,
+                    PagedFilteredEntities = filteredEntities,
                     TotalCount = totalCount
                 };
 
@@ -66,7 +57,7 @@ namespace KameGameAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Handle exceptions appropriately
+                // Log the exception
                 return StatusCode(500, "Internal server error");
             }
         }
