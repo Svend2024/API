@@ -45,8 +45,8 @@ namespace KameGameAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("price")
-                        .HasColumnType("int");
+                    b.Property<double>("price")
+                        .HasColumnType("float");
 
                     b.Property<string>("race")
                         .HasColumnType("nvarchar(max)");

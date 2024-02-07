@@ -122,7 +122,7 @@ namespace KameGameAPI.Migrations
                     cardCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     setId = table.Column<int>(type: "int", nullable: false),
                     pictureLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    price = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<double>(type: "float", nullable: false),
                     stock = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
