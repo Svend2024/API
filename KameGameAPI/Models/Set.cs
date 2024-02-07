@@ -10,7 +10,5 @@ namespace KameGameAPI.Models
         public string setCode { get ; set ; }
         [Required]
         public string setName { get; set; }
-        [Required]
-        public string setRarity { get; set; }
     }
 }

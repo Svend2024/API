@@ -13,7 +13,8 @@ namespace KameGameAPI.Models
         public string? attribute { get; set; }
         public string? race { get; set; }
         [Required]
-        [ForeignKey("Set.setKode")]
+        public string cardCode { get; set; }
+        [ForeignKey("Set.setCode")]
         public string setCode { get; set; }
         public Set set { get; set; }
         [Required]
