@@ -11,7 +11,7 @@ namespace KameGameAPI.Models
         public string fullname { get; set; }
         [ForeignKey("ZipCodeCity.zipCode")]
         public int zipCode { get; set; }
-        public ZipCodeCity zipCodeCity { get; set; }
+        public ZipCodeCity? zipCodeCity { get; set; }
         [Required]
         public string address { get; set; }
         [Required]
