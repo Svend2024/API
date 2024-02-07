@@ -9,8 +9,9 @@ namespace KameGameAPI.Models
         public int customerId { get { return id; } set { id = value; } }
         [Required]
         public string fullname { get; set; }
-        [ForeignKey("PostNrBy.Postnummer")]
+        [ForeignKey("ZipCodeCity.zipCode")]
         public int zipCode { get; set; }
+        public ZipCodeCity? zipCodeCity { get; set; }
         [Required]
         public string address { get; set; }
         [Required]
