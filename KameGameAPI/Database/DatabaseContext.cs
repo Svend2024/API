@@ -25,15 +25,15 @@ namespace KameGameAPI.Database
         {
             modelBuilder.Entity<Customer>().HasOne(c => c.login).WithOne().HasForeignKey<Customer>(c => c.loginId);
 
-            modelBuilder.Entity<Customer>().HasOne(c => c.zipCodeCity).WithOne().HasForeignKey<Customer>(c => c.zipCode);
+            modelBuilder.Entity<Customer>().HasOne(c => c.zipCodeCity).WithMany().HasForeignKey(c => c.zipCode);
 
             modelBuilder.Entity<ProductManager>().HasOne(p => p.login).WithOne().HasForeignKey<ProductManager>(p => p.loginId);
 
-            modelBuilder.Entity<Card>().HasOne(c => c.set).WithOne().HasForeignKey<Card>(c => c.setId);
+            modelBuilder.Entity<Card>().HasOne(c => c.set).WithMany().HasForeignKey(c => c.setId);
 
-            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.card).WithOne().HasForeignKey<TransactionHistory>(T => T.cardId);
+            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.card).WithMany().HasForeignKey(T => T.cardId);
 
-            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.customer).WithOne().HasForeignKey<TransactionHistory>(T => T.customerId);
+            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.customer).WithMany().HasForeignKey(T => T.customerId);
         }
     }
 }
