@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace KameGameAPI.Controllers
 {
@@ -12,10 +13,12 @@ namespace KameGameAPI.Controllers
     public class CardsController : BaseEntitiesController<Card>
     {
         IBaseService<Card> _context;
+        IElasticClient _elasticClient;
 
-        public CardsController(IBaseService<Card> context) : base(context)
+        public CardsController(IBaseService<Card> context, IElasticClient elasticClient) : base(context)
         {
             _context = context;
+            _elasticClient = elasticClient;
         }
 
         [HttpGet("paged")]
@@ -54,6 +57,34 @@ namespace KameGameAPI.Controllers
                 };
 
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchEntities([FromQuery] string searchTerm, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            try
+            {
+                var searchRes = await _context.SearchAsync(s => s
+                    .From((page - 1) * pageSize)
+                    .Size(pageSize)
+                    .Query(q => q
+                        .MultiMatch(m => m
+                            .Fields(f => f
+                                .Field(p => p.name) // Assuming Name is the property to search
+                                .Field(p => p.cardCode) // Assuming CardCode is the property to search
+                            )
+                            .Query(searchTerm)
+                        )
+                    )
+                );
+
+                // Return search results
+                return Ok(searchRes.Documents);
             }
             catch (Exception ex)
             {

@@ -4,16 +4,21 @@ using KameGameAPI.Models;
 using KameGameAPI.Security;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace KameGameAPI.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         private readonly DatabaseContext _context;
+        private readonly IElasticClient _elasticClient;
         public readonly IDataProtector _dataProtector;
-        public BaseRepository(DatabaseContext context, IDataProtectionProvider dataProtectionProvider)
+
+
+        public BaseRepository(DatabaseContext context, IDataProtectionProvider dataProtectionProvider, IElasticClient elasticClient)
         {
             _context = context;
+            _elasticClient = elasticClient;
             _dataProtector = dataProtectionProvider.CreateProtector("InformationProtection");
         }
 
@@ -174,6 +179,21 @@ namespace KameGameAPI.Repositories
             var totalCount = await query.CountAsync();
 
             return (filteredEntities, totalCount);
+        }
+        public async Task<List<Card>> SearchEntities(string searchTerm, int page, int pageSize)
+        {
+            var searchRes = await _elasticClient.SearchAsync<Card>(s => s
+                .Query(q => q
+                    .MultiMatch(m => m
+                        .Fields(f => f
+                            .Field(p => p.cardCode)
+                            .Field(p => p.name)
+                        )
+                        .Query(searchTerm)
+                    )
+                )
+            );
+            return searchRes.Documents.ToList();
         }
     }
 }

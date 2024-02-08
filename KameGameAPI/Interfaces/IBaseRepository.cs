@@ -1,4 +1,6 @@
 ﻿using KameGameAPI.Models;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using Nest;
 
 namespace KameGameAPI.Interfaces
 {
@@ -12,5 +14,6 @@ namespace KameGameAPI.Interfaces
         Task<IEnumerable<T>> GetPagedAsync(int startIndex, int pageSize);
         Task<int> GetTotalCountAsync();
         Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesRepository(string type, string attribute, string race, int page, int pageSize);
+        Task<List<Card>> SearchEntities(string searchTerm, int page, int pageSize);
     }
 }

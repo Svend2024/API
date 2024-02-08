@@ -1,18 +1,27 @@
 ﻿using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 using NuGet.Protocol.Core.Types;
+using System.Diagnostics;
+using System.Drawing.Printing;
+using System;
 
 namespace KameGameAPI.Services
 {
     public class BaseService<T> : IBaseService<T> where T : BaseEntity
     {
+        private readonly IElasticClient _elasticClient;
         protected readonly IBaseRepository<T> _context;
 
-        public BaseService(IBaseRepository<T> context)
+        public BaseService(IBaseRepository<T> context, IElasticClient elasticClient)
         {
             _context = context;
+            _elasticClient = elasticClient;
         }
+
+        public async Task<ISearchResponse<T>> SearchAsync(Func<SearchDescriptor<T>, ISearchRequest> selector) =>
+               await _elasticClient.SearchAsync(selector);
 
         public async Task<List<T>> GetEntitiesService()
         {

@@ -1,4 +1,6 @@
+using Elasticsearch.Net;
 using KameGameAPI.Database;
+using KameGameAPI.Extenstions;
 using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
 using KameGameAPI.Repositories;
@@ -7,6 +9,8 @@ using KameGameAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Nest;
+using System.Configuration;
 using System.Reflection;
 using System.Text;
 
@@ -31,6 +35,8 @@ builder.Services.Configure<JwtConfig>(jwtSection);
 
 var appSettings = jwtSection.Get<JwtConfig>();
 var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+builder.Services.AddElasticSearch(builder.Configuration);
 
 builder.Services.AddAuthentication(x =>
 {
