@@ -10,8 +10,6 @@ namespace KameGameAPI.Interfaces
         Task<bool> UpdateEntityService(int id, T entity);
         Task CreateEntityService(T entity);
         Task<bool> DeleteEntityService(int id);
-        Task<(List<T> pagedEntities, int totalCount)> GetPagedEntitiesService(int page, int pageSize);
-        Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesService(string type = null, string attribute = null, string race = null, int page = 1, int pageSize = 8);
-        Task<ISearchResponse<T>> SearchAsync(Func<SearchDescriptor<T>, ISearchRequest> selector);
+        Task<(IEnumerable<Card> results, int totalCount)> FilterSearchAsyncService(string? searchTerm = null, string? type = null, string? attribute = null, string? race = null, int page = 1, int pageSize = 8);
     }
 }

@@ -10,7 +10,7 @@ namespace KameGameAPI.Extenstions
         )
         {
             var url = configuration["Elasticsearch:Uri"];
-            var defaultIndex = "/cards";
+            var defaultIndex = "/Cards";
 
             var settings = new ConnectionSettings(new Uri(url))
                 .PrettyJson()

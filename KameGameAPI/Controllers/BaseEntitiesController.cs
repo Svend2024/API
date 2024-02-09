@@ -3,6 +3,7 @@ using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace KameGameAPI.Controllers
 {
