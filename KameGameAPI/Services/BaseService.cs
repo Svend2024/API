@@ -47,17 +47,9 @@ namespace KameGameAPI.Services
         {
             return await _context.DeleteEntityRepository(id);
         }
-        public async Task<(List<T> pagedEntities, int totalCount)> GetPagedEntitiesService(int page, int pageSize)
+        public async Task<(IEnumerable<Card> results, int totalCount)> FilterSearchAsyncService(string? searchTerm = null, string? type = null, string? attribute = null, string? race = null, int page = 1, int pageSize = 8)
         {
-            var startIndex = (page - 1) * pageSize;
-            var pagedEntities = (await _context.GetPagedAsync(startIndex, pageSize)).ToList();
-            var totalCount = await _context.GetTotalCountAsync();
-
-            return (pagedEntities, totalCount);
-        }
-        public async Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesService(string type = null, string attribute = null, string race = null, int page = 1, int pageSize = 8)
-        {
-            return await _context.GetFilteredEntitiesRepository(type, attribute, race, page, pageSize);
+            return await _context.FilterSearchAsyncRepository(searchTerm, type, attribute, race, page, pageSize);
         }
     }
 }

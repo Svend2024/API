@@ -11,14 +11,12 @@ namespace KameGameAPI.Repositories
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         private readonly DatabaseContext _context;
-        private readonly IElasticClient _elasticClient;
         public readonly IDataProtector _dataProtector;
 
 
-        public BaseRepository(DatabaseContext context, IDataProtectionProvider dataProtectionProvider, IElasticClient elasticClient)
+        public BaseRepository(DatabaseContext context, IDataProtectionProvider dataProtectionProvider)
         {
             _context = context;
-            _elasticClient = elasticClient;
             _dataProtector = dataProtectionProvider.CreateProtector("InformationProtection");
         }
 
@@ -149,51 +147,42 @@ namespace KameGameAPI.Repositories
             //return (_context.logins?.Any(e => e.loginId == id)).GetValueOrDefault();            
             return Task.FromResult((_context.Set<T>()?.Any(e => e.id == id)).GetValueOrDefault());
         }
-
-        public async Task<IEnumerable<T>> GetPagedAsync(int startIndex, int pageSize)
-        {
-            return (List<T>)(object)await _context.cards.Include(c => c.set).Skip(startIndex).Take(pageSize).ToListAsync();
-        }
-
         public async Task<int> GetTotalCountAsync()
         {
             return await _context.Set<T>().CountAsync();
         }
-        public async Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesRepository(string type = null, string attribute = null, string race = null, int page = 1, int pageSize = 4)
+        public async Task<(IEnumerable<Card> results, int totalCount)> FilterSearchAsyncRepository(string? searchTerm = null, string? type = null, string? attribute = null, string? race = null, int page = 1, int pageSize = 4)
         {
-            IQueryable<T> query = _context.Set<T>();
+            var query = _context.cards.AsQueryable();
 
             // Apply filters based on provided parameters
             if (!string.IsNullOrEmpty(type))
-                query = query.Where(e => EF.Property<string>(e, "type") == type);
+                query = query.Where(e => e.type == type);
 
             if (!string.IsNullOrEmpty(attribute))
-                query = query.Where(e => EF.Property<string>(e, "attribute") == attribute);
+                query = query.Where(e => e.attribute == attribute);
 
             if (!string.IsNullOrEmpty(race))
-                query = query.Where(e => EF.Property<string>(e, "race") == race);
+                query = query.Where(e => e.race == race);
+
+            // Filter by name or code if searchTerm is provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                searchTerm = searchTerm.ToLower(); // Convert search term to lowercase for case-insensitive search
+                query = query.Where(c => c.name.ToLower().Contains(searchTerm) || c.cardCode.ToLower().Contains(searchTerm));
+            }
+
+            // Count total number of matching records
+            var totalCount = await query.CountAsync();
 
             // Pagination
             var startIndex = (page - 1) * pageSize;
-            var filteredEntities = await query.Skip(startIndex).Take(pageSize).ToListAsync();
-            var totalCount = await query.CountAsync();
+            query = query.Skip(startIndex).Take(pageSize);
 
-            return (filteredEntities, totalCount);
-        }
-        public async Task<List<Card>> SearchEntities(string searchTerm, int page, int pageSize)
-        {
-            var searchRes = await _elasticClient.SearchAsync<Card>(s => s
-                .Query(q => q
-                    .MultiMatch(m => m
-                        .Fields(f => f
-                            .Field(p => p.cardCode)
-                            .Field(p => p.name)
-                        )
-                        .Query(searchTerm)
-                    )
-                )
-            );
-            return searchRes.Documents.ToList();
+            // Execute the query
+            var results = await query.ToListAsync();
+
+            return (results, totalCount);
         }
     }
 }
