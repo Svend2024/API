@@ -11,7 +11,9 @@ namespace KameGameAPI.Interfaces
         Task<bool> UpdateEntityRepository(int id, T entity);
         Task CreateEntityRepository(T entity);
         Task<bool> DeleteEntityRepository(int id);
+        Task<IEnumerable<T>> GetPagedAsync(int startIndex, int pageSize);
         Task<int> GetTotalCountAsync();
-        Task<(IEnumerable<Card> results, int totalCount)> FilterSearchAsyncRepository(string? searchTerm = null, string? type = null, string? attribute = null, string? race = null, int page = 1, int pageSize = 8);
+        Task<(List<T> filteredEntities, int totalCount)> GetFilteredEntitiesRepository(string type, string attribute, string race, int page, int pageSize);
+        Task<List<Card>> SearchEntities(string searchTerm, int page, int pageSize);
     }
 }
