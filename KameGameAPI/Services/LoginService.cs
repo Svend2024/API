@@ -10,20 +10,20 @@ using System.Text;
 
 namespace KameGameAPI.Services
 {
-    public class CustomerService : ICustomerService
+    public class LoginService : ILoginService
     {
-        private readonly ICustomerRepository _context;
+        private readonly ILoginRepository _context;
         private readonly JwtConfig _jwtSettings;
-        
-        public CustomerService(ICustomerRepository context, IOptions<JwtConfig> jwtSettings)
+
+        public LoginService(ILoginRepository context, IOptions<JwtConfig> jwtSettings)
         {
             _context = context;
             _jwtSettings = jwtSettings.Value;
         }
 
-        public async Task<LoginResponse> LoginCustomerService(string username, string password)
+        public async Task<LoginResponse> LoginActionService(string username, string password)
         {
-            Customer customer = await _context.LoginCustomerRepository(username, password);
+            object loginResult = await _context.LoginActionRepository(username, password);            
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);     // encode secretkey
             var tokenDescriptor = new SecurityTokenDescriptor // token attributter
@@ -31,14 +31,17 @@ namespace KameGameAPI.Services
                 // payload
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("id", customer.customerId.ToString()),
+                    loginResult is Customer customer ? new Claim("id", customer.customerId.ToString()) :
+
+                    loginResult is ProductManager productManager ? new Claim("id", productManager.productManagerId.ToString()) :
+                    throw new InvalidOperationException("kan ikke ramme det her?")
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return new LoginResponse() { token = tokenHandler.WriteToken(token) };
+            return new LoginResponse() { token = tokenHandler.WriteToken(token), rolle = loginResult is Customer ? "Customer" : "ProductManager" };
         }
     }
 }

@@ -69,8 +69,8 @@ foreach (var model in models)
     builder.Services.AddScoped(baseServiceType, baseServiceImplementationType);
     builder.Services.AddScoped(baseRepositoryType, baseRepositoryImplementationType);
 }
-builder.Services.AddScoped(typeof(ICustomerService), typeof(CustomerService));
-builder.Services.AddScoped(typeof(ICustomerRepository), typeof(CustomerRepository));
+builder.Services.AddScoped(typeof(ILoginService), typeof(LoginService));
+builder.Services.AddScoped(typeof(ILoginRepository), typeof(LoginRepository));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
