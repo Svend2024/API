@@ -31,9 +31,9 @@ namespace KameGameAPI.Services
                 // payload
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    loginResult is Customer customer ? new Claim("id", customer.customerId.ToString()) :
+                    loginResult is Customer customer ? new Claim("id", customer.id.ToString()) :
 
-                    loginResult is ProductManager productManager ? new Claim("id", productManager.productManagerId.ToString()) :
+                    loginResult is ProductManager productManager ? new Claim("id", productManager.id.ToString()) :
                     throw new InvalidOperationException("kan ikke ramme det her?")
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),

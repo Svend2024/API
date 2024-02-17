@@ -30,7 +30,6 @@ namespace KameGameAPI.Extenstions
             p.Ignore(x => x.price)
                 .Ignore(x => x.pictureLink)
                 .Ignore(x => x.id)
-                .Ignore(x => x.cardId)
                 .Ignore(x => x.type)
                 .Ignore(x => x.attribute)
                 .Ignore(x => x.race)

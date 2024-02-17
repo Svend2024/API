@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KameGameAPI.Models
 {
-    public class Set
-    {
-        [Key]
-        public int setId { get; set; }
+    public class Set : BaseEntity
+    {        
         [Required]
         public string setCode { get ; set ; }
         [Required]

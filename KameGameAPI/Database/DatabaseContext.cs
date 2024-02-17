@@ -9,7 +9,6 @@ namespace KameGameAPI.Database
         {
 
         }
-        public DbSet<ZipCodeCity> zipCodeCities { get; set; }
         public DbSet<Login> logins { get; set; }
         public DbSet<Customer> customers { get; set; }
         public DbSet<ProductManager> productManagers { get; set; }
@@ -23,17 +22,15 @@ namespace KameGameAPI.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasOne(c => c.login).WithOne().HasForeignKey<Customer>(c => c.loginId);
+            modelBuilder.Entity<Customer>().HasOne(c => c.login).WithOne().HasForeignKey<Customer>(c => c.id);
 
-            modelBuilder.Entity<Customer>().HasOne(c => c.zipCodeCity).WithMany().HasForeignKey(c => c.zipCode);
-
-            modelBuilder.Entity<ProductManager>().HasOne(p => p.login).WithOne().HasForeignKey<ProductManager>(p => p.loginId);
+            modelBuilder.Entity<ProductManager>().HasOne(p => p.login).WithOne().HasForeignKey<ProductManager>(p => p.id);
 
             modelBuilder.Entity<Card>().HasOne(c => c.set).WithMany().HasForeignKey(c => c.setId);
 
-            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.card).WithMany().HasForeignKey(T => T.cardId);
+            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.card).WithMany().HasForeignKey(T => T.id);
 
-            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.customer).WithMany().HasForeignKey(T => T.customerId);
+            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.customer).WithMany().HasForeignKey(T => T.id);
         }
     }
 }

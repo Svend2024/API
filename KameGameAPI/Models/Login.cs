@@ -4,8 +4,8 @@ namespace KameGameAPI.Models
 {
     public class Login : BaseEntity
     {
-        [Key]
-        public int loginId { get { return id; } set { id = value; } }
+        //[Key]
+        //public int loginId { get { return id; } set { id = value; } }
         [Required]
         public string username { get; set; }
         [Required]

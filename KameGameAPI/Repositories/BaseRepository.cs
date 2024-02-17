@@ -36,7 +36,7 @@ namespace KameGameAPI.Repositories
             T entity = await _context.Set<T>().FindAsync(id);
             if (entity is Customer)
             {
-                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.customerId == id).FirstOrDefaultAsync();
+                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.id == id).FirstOrDefaultAsync();
                 customer.fullname = _dataProtector.Unprotect(customer.fullname);
                 customer.email = _dataProtector.Unprotect(customer.email);
                 customer.address = _dataProtector.Unprotect(customer.address);
@@ -44,13 +44,13 @@ namespace KameGameAPI.Repositories
             }
             else if (entity is ProductManager)
             {
-                ProductManager productManager = await _context.productManagers.Include(c => c.login).Where(c => c.productManagerId == id).FirstOrDefaultAsync();
+                ProductManager productManager = await _context.productManagers.Include(c => c.login).Where(c => c.id == id).FirstOrDefaultAsync();
                 productManager.fullname = _dataProtector.Unprotect(productManager.fullname);
                 return (T)(object)productManager;
             }
             else if (entity is Card)
             {
-                Card card = await _context.cards.Include(c => c.set).Where(c => c.cardId == id).FirstOrDefaultAsync();
+                Card card = await _context.cards.Include(c => c.set).Where(c => c.id == id).FirstOrDefaultAsync();
                 return (T)(object)card;
             }
             else return entity;
@@ -69,14 +69,12 @@ namespace KameGameAPI.Repositories
                 customer.fullname = _dataProtector.Protect(customer.fullname);
                 customer.email = _dataProtector.Protect(customer.email);
                 customer.address = _dataProtector.Protect(customer.address);
-                customer.login.password = SALT.Hashing(customer.login.password);
                 _context.Entry(customer).State = EntityState.Modified;
             }
             else if (entity is ProductManager)
             {
                 ProductManager productManager = (ProductManager)(object)entity;
                 productManager.fullname = _dataProtector.Protect(productManager.fullname);
-                productManager.login.password = SALT.Hashing(productManager.login.password);
                 _context.Entry(productManager).State = EntityState.Modified;
             }
             else _context.Entry(entity).State = EntityState.Modified;
@@ -119,20 +117,20 @@ namespace KameGameAPI.Repositories
             }
             else if (entity is Customer)
             {
-                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.customerId == id).FirstOrDefaultAsync();
+                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.id == id).FirstOrDefaultAsync();
                 _context.logins.Remove(customer.login);
                 _context.customers.Remove(customer);
 
             }
             else if (entity is ProductManager)
             {
-                ProductManager productManager = await _context.productManagers.Include(p => p.login).Where(c => c.productManagerId == id).FirstOrDefaultAsync();
+                ProductManager productManager = await _context.productManagers.Include(p => p.login).Where(c => c.id == id).FirstOrDefaultAsync();
                 _context.logins.Remove(productManager.login);
                 _context.productManagers.Remove(productManager);
             }
             else if (entity is Card)
             {
-                Card card = await _context.cards.Include(p => p.set).Where(c => c.cardId == id).FirstOrDefaultAsync();
+                Card card = await _context.cards.Include(p => p.set).Where(c => c.id == id).FirstOrDefaultAsync();
                 _context.sets.Remove(card.set);
                 _context.cards.Remove(card);
             }

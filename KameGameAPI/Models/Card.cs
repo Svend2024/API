@@ -5,8 +5,8 @@ namespace KameGameAPI.Models
 {
     public class Card : BaseEntity
     {
-        [Key]
-        public int cardId { get { return id; } set { id = value; } }
+        //[Key]
+        //public int cardId { get { return id; } set { id = value; } }
         [Required]
         public string name { get; set; }
         public string? type { get; set; }
@@ -14,7 +14,7 @@ namespace KameGameAPI.Models
         public string? race { get; set; }
         [Required]
         public string cardCode { get; set; }
-        [ForeignKey("Set.setId")]
+        [ForeignKey("Set.id")]
         public int setId { get; set; }
         public Set set { get; set; }
         [Required]
