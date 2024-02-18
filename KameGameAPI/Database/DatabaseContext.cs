@@ -22,15 +22,13 @@ namespace KameGameAPI.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasOne(c => c.login).WithOne().HasForeignKey<Customer>(c => c.id);
+            modelBuilder.Entity<Customer>().HasOne(c => c.login).WithOne().HasForeignKey<Customer>(c => c.loginId);
 
-            modelBuilder.Entity<ProductManager>().HasOne(p => p.login).WithOne().HasForeignKey<ProductManager>(p => p.id);
+            modelBuilder.Entity<ProductManager>().HasOne(p => p.login).WithOne().HasForeignKey<ProductManager>(p => p.loginId);
 
             modelBuilder.Entity<Card>().HasOne(c => c.set).WithMany().HasForeignKey(c => c.setId);
 
-            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.card).WithMany().HasForeignKey(T => T.id);
-
-            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.customer).WithMany().HasForeignKey(T => T.id);
+            modelBuilder.Entity<TransactionHistory>().HasOne(T => T.customer).WithMany().HasForeignKey(T => T.customerId);
         }
     }
 }

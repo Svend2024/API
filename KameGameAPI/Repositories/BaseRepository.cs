@@ -77,6 +77,12 @@ namespace KameGameAPI.Repositories
                 productManager.fullname = _dataProtector.Protect(productManager.fullname);
                 _context.Entry(productManager).State = EntityState.Modified;
             }
+            else if (entity is Login)
+            {
+                Login login = (Login)(object)entity;
+                login.password = SALT.Hashing(login.password);
+                _context.Entry(login).State = EntityState.Modified;
+            }
             else _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return true;

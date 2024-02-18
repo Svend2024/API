@@ -11,9 +11,11 @@ namespace KameGameAPI.Controllers
     public class LoginsController : ControllerBase
     {
         ILoginService _loginContext;
-        public LoginsController(ILoginService loginContext) 
+        IBaseService<Login> _context;
+        public LoginsController(ILoginService loginContext, IBaseService<Login> context) 
         {
             _loginContext = loginContext;
+            _context = context;
         }
 
         [HttpPost("Login")]
@@ -30,6 +32,21 @@ namespace KameGameAPI.Controllers
             {
                 return Problem(ex.Message);
             }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateLogin(int id, Login login)
+        {
+            // bool
+            if (id != login.id)
+            {
+                return BadRequest("id != entity.id");
+            }
+            if (await _context.UpdateEntityService(id, login))
+            {
+                return NoContent();
+            }
+            return NotFound("EntityExists(id) false");
         }
     }
 }
