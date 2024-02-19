@@ -114,33 +114,33 @@ namespace KameGameAPI.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteEntityRepository(int id)
+        public async Task<bool> DeleteEntityRepository(T entity)
         {
-            var entity = await _context.Set<T>().FindAsync(id);
-            if (entity == null)
+            var localEntity = await _context.Set<T>().FindAsync(entity.id);
+            if (localEntity == null)
             {
                 return false;
             }
-            else if (entity is Customer)
+            else if (localEntity is Customer)
             {
-                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.id == id).FirstOrDefaultAsync();
+                Customer customer = await _context.customers.Include(c => c.login).Where(c => c.id == entity.id).FirstOrDefaultAsync();
                 _context.logins.Remove(customer.login);
                 _context.customers.Remove(customer);
 
             }
-            else if (entity is ProductManager)
+            else if (localEntity is ProductManager)
             {
-                ProductManager productManager = await _context.productManagers.Include(p => p.login).Where(c => c.id == id).FirstOrDefaultAsync();
+                ProductManager productManager = await _context.productManagers.Include(p => p.login).Where(c => c.id == entity.id).FirstOrDefaultAsync();
                 _context.logins.Remove(productManager.login);
                 _context.productManagers.Remove(productManager);
             }
-            else if (entity is Card)
+            else if (localEntity is Card)
             {
-                Card card = await _context.cards.Include(p => p.set).Where(c => c.id == id).FirstOrDefaultAsync();
+                Card card = await _context.cards.Include(p => p.set).Where(c => c.id == entity.id).FirstOrDefaultAsync();
                 _context.sets.Remove(card.set);
                 _context.cards.Remove(card);
             }
-            else _context.Set<T>().Remove(entity);
+            else _context.Set<T>().Remove(localEntity);
             await _context.SaveChangesAsync();
 
             return true;

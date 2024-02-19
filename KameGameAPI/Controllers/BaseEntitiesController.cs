@@ -1,6 +1,7 @@
 ﻿using KameGameAPI.Database;
 using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
@@ -42,7 +43,7 @@ namespace KameGameAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEntity(int id, T entity)
+        public virtual async Task<IActionResult> UpdateEntity(int id, T entity)
         {
             // bool
             if (id != entity.id)
@@ -57,7 +58,7 @@ namespace KameGameAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEntity(T entity)
+        public virtual async Task<IActionResult> CreateEntity(T entity)
         {
             // ingen returværdi lige pt.
             await _context.CreateEntityService(entity);
@@ -65,10 +66,10 @@ namespace KameGameAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEntity(int id)
+        public virtual async Task<IActionResult> DeleteEntity(T entity)
         {
             // bool
-            if (await _context.DeleteEntityService(id))
+            if (await _context.DeleteEntityService(entity))
             {
                 NoContent();
             }

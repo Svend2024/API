@@ -43,9 +43,9 @@ namespace KameGameAPI.Services
             await _context.CreateEntityRepository(entity);
         }
 
-        public async Task<bool> DeleteEntityService(int id)
+        public async Task<bool> DeleteEntityService(T enitity)
         {
-            return await _context.DeleteEntityRepository(id);
+            return await _context.DeleteEntityRepository(enitity);
         }
         public async Task<(IEnumerable<Card> results, int totalCount)> FilterSearchAsyncService(string? searchTerm = null, string? type = null, string? attribute = null, string? race = null, int page = 1, int pageSize = 8)
         {

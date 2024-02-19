@@ -16,7 +16,7 @@ namespace KameGameAPI.Models
         public string cardCode { get; set; }
         [ForeignKey("Set.id")]
         public int setId { get; set; }
-        public Set set { get; set; }
+        public Set? set { get; set; }
         [Required]
         public string pictureLink { get; set; }
         [Required]

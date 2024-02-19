@@ -38,5 +38,22 @@ namespace KameGameAPI.Controllers
             }
         }
 
+        [Authorize]
+        public override async Task<IActionResult> UpdateEntity(int id, Card entity)
+        {
+            return await base.UpdateEntity(id, entity);
+        }
+
+        [Authorize]
+        public override async Task<IActionResult> CreateEntity(Card entity)
+        {
+            return await base.CreateEntity(entity);
+        }
+
+        [Authorize]
+        public override async Task<IActionResult> DeleteEntity(Card entity)
+        {
+            return await base.DeleteEntity(entity);
+        }
     }
 }

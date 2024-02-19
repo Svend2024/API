@@ -1,6 +1,7 @@
 ﻿using KameGameAPI.DTO;
 using KameGameAPI.Interfaces;
 using KameGameAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,7 @@ namespace KameGameAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateLogin(int id, Login login)
         {
             // bool

@@ -10,7 +10,7 @@ namespace KameGameAPI.Interfaces
         Task<T> GetEntityRepository(int id);
         Task<bool> UpdateEntityRepository(int id, T entity);
         Task CreateEntityRepository(T entity);
-        Task<bool> DeleteEntityRepository(int id);
+        Task<bool> DeleteEntityRepository(T enitity);
         Task<int> GetTotalCountAsync();
         Task<(IEnumerable<Card> results, int totalCount)> FilterSearchAsyncRepository(string? searchTerm = null, string? type = null, string? attribute = null, string? race = null, int page = 1, int pageSize = 8);
     }
